@@ -2,18 +2,18 @@ package task1;
 
 import java.util.List;
 
-public class FuelCalculator {
+class FuelCalculator {
 
     private int totalFuel;
-    private Task task;
-    private List<Integer> massList;
+    private final Task task;
+    private final List<Integer> massList;
 
-    public FuelCalculator(List<Integer> massList, Task task) {
+    FuelCalculator(List<Integer> massList, Task task) {
         this.massList = massList;
         this.task = task;
     }
 
-    public int calculateTotal() {
+    int calculateTotal() {
         massList.forEach(this::calculateFuelAndAddToTotal);
 
         return totalFuel;

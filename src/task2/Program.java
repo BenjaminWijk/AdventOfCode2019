@@ -2,16 +2,16 @@ package task2;
 
 import java.util.Map;
 
-public class Program {
+class Program {
 
-    private Map<Integer, Integer> memory;
+    private final Map<Integer, Integer> memory;
     private int pointer;
 
-    public Program(Map<Integer, Integer> memory) {
+    Program(Map<Integer, Integer> memory) {
         this.memory = memory;
     }
 
-    public int performInstructions(int noun, int verb) {
+    int performInstructions(int noun, int verb) {
         memory.put(1, noun);
         memory.put(2, verb);
 

@@ -38,8 +38,7 @@ public class FileUtil {
     public static List<Integer> readLinesFromFileAsIntegers(int taskNumber, String filename){
         List<String> stringList = readLinesFromFile(taskNumber, filename);
 
-        return stringList.stream().map(str ->
-                Integer.valueOf(str))
+        return stringList.stream().map(Integer::valueOf)
                 .collect(Collectors.toList());
     }
 

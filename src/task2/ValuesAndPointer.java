@@ -1,11 +1,11 @@
 package task2;
 
-public class ValuesAndPointer {
-    public int first;
-    public int second;
-    public int toPosition;
+class ValuesAndPointer {
+    final int first;
+    final int second;
+    final int toPosition;
 
-    public ValuesAndPointer(int first, int second, int toPosition) {
+    ValuesAndPointer(int first, int second, int toPosition) {
         this.first = first;
         this.second = second;
         this.toPosition = toPosition;

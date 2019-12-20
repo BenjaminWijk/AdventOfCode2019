@@ -4,8 +4,8 @@ package util;
 //But I was bored and wanted to make my own impl.
 
 public class SmallestBuffer {
-    private Integer[] buffer;
-    boolean haveNullPositions = true;
+    private final Integer[] buffer;
+    private boolean haveNullPositions = true;
 
     public SmallestBuffer() {
         buffer = new Integer[1];
@@ -37,7 +37,7 @@ public class SmallestBuffer {
         }
     }
 
-    public LargestValue getLargestValue() {
+    private LargestValue getLargestValue() {
         Integer largest = null;
         Integer pos = null;
 
@@ -48,15 +48,19 @@ public class SmallestBuffer {
             }
         }
 
+        if (largest == null) {
+            throw new NullPointerException("Somehow received null when trying to find largestNumber");
+        }
+
         return new LargestValue(largest, pos);
     }
 
     public Integer getSmallestValue() {
         Integer smallest = null;
 
-        for (int i = 0; i < buffer.length; i++) {
-            if(smallest == null || buffer[i] < smallest){
-                smallest = buffer[i];
+        for (Integer value : buffer) {
+            if (smallest == null || value < smallest) {
+                smallest = value;
             }
         }
 
@@ -68,8 +72,8 @@ public class SmallestBuffer {
     }
 
     private class LargestValue {
-        int value;
-        int position;
+        final int value;
+        final int position;
 
         private LargestValue(int value, int position) {
             this.value = value;

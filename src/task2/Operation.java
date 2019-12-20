@@ -15,7 +15,7 @@ public enum Operation {
         this.code = code;
     }
 
-    private static Map<Integer, Operation> intToOperation = new HashMap<>();
+    private static final Map<Integer, Operation> intToOperation = new HashMap<>();
     static {
         Arrays.stream(Operation.values()).forEach(operation ->
                 intToOperation.put(operation.code, operation));
