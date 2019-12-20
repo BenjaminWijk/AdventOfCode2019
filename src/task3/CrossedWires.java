@@ -62,7 +62,7 @@ class CrossedWires {
         }
     }
 
-    public int getFewestStepsIntersection() {
+    int getFewestStepsIntersection() {
         List<Point> intersections = getIntersections();
 
         SmallestBuffer smallestForGrid = new SmallestBuffer();
