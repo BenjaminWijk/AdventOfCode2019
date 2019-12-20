@@ -1,4 +1,4 @@
-package task3;
+package util;
 
 //There are probably tons of better ways to implement this,
 //But I was bored and wanted to make my own impl.
@@ -6,6 +6,10 @@ package task3;
 public class SmallestBuffer {
     private Integer[] buffer;
     boolean haveNullPositions = true;
+
+    public SmallestBuffer() {
+        buffer = new Integer[1];
+    }
 
     public SmallestBuffer(int bufferSize) {
         buffer = new Integer[bufferSize];

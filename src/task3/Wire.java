@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Wire {
 
+    //TODO replace with the raw strings of direction + distance.
     private List<DirectionAndDistance> directionAndDistances;
     private List<Point> points = new ArrayList<>();
 
@@ -13,15 +14,18 @@ public class Wire {
     }
 
     public Integer getStepsToPoint(Point point){
-        if(!points.contains(point))
+        if (!points.contains(point)) {
             return null;
+        }
 
         Stepper stepper = new Stepper();
-        for (DirectionAndDistance dd : directionAndDistances) {
-            for (int i = 0; i < dd.distance; i++) {
-                stepper.step(dd.direction);
 
-                if(Point.get(stepper.getX(),stepper.getY()) == point){
+        for (DirectionAndDistance dad : directionAndDistances) {
+            for (int i = 0; i < dad.distance; i++) {
+                stepper.step(dad.direction);
+
+                Point currentPoint = Point.get(stepper.getX(), stepper.getY());
+                if (currentPoint == point) {
                     return stepper.getTotalSteps();
                 }
             }
@@ -33,16 +37,15 @@ public class Wire {
     public void calculatePoints() {
         Stepper stepper = new Stepper();
 
-        for (DirectionAndDistance dd : directionAndDistances) {
-            for (int i = 0; i < dd.distance; i++) {
-                stepper.step(dd.direction);
-                addPoint(stepper.getX(), stepper. getY());
+        for (DirectionAndDistance dad : directionAndDistances) {
+            for (int i = 0; i < dad.distance; i++) {
+                stepper.step(dad.direction);
+
+                points.add(Point.get(
+                        stepper.getX(),
+                        stepper.getY()));
             }
         }
-    }
-
-    private void addPoint(int x, int y) {
-        points.add(Point.get(x, y));
     }
 
     public List<Point> getPoints() {

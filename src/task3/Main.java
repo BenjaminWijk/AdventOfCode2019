@@ -4,7 +4,9 @@ import util.FileUtil;
 
 import java.util.List;
 
-//This takes about 1.2 sec for me to run, which feels iffy.
+//The one upside to my solution is that it supports more than 2 wires.
+//Downside is that it feels somewhat slow (takes 1-2 sec to run on my comp)
+//Should probably base initial search of intersections on lines, rather than points. Or something.
 public class Main {
 
     //Task A: 2050
@@ -21,6 +23,5 @@ public class Main {
 
         //Task B
         System.out.println(cw.getFewestStepsIntersection());
-
     }
 }

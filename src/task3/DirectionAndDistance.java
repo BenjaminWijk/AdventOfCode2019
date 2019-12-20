@@ -1,5 +1,6 @@
 package task3;
 
+//TODO remove
 public class DirectionAndDistance {
     Direction direction;
     int distance;

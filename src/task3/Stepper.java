@@ -5,6 +5,7 @@ public class Stepper {
     private int y;
     private int totalSteps;
 
+    //TODO just use single char instead of enum
     public void step(Direction direction){
         switch (direction) {
             case UP:

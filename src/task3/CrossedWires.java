@@ -1,5 +1,7 @@
 package task3;
 
+import util.SmallestBuffer;
+
 import java.util.*;
 
 /**
@@ -9,6 +11,7 @@ public class CrossedWires {
 
     private List<Wire> wires;
     private Map<Point, Set<Wire>> pointToWireIntersection = new HashMap<>();
+    private List<Point> intersections;
 
     public CrossedWires(List<Wire> wires) {
         this.wires = wires;
@@ -23,29 +26,25 @@ public class CrossedWires {
     public Integer getClosestIntersection() {
         Point centralPort = Point.get(0, 0);
 
-        Integer closestDistance = null;
+        SmallestBuffer closest = new SmallestBuffer();
         for (Point intersection : getIntersections()) {
-            int intersectionDistance = centralPort.getDistance(intersection);
-
-            if (closestDistance == null) {
-                closestDistance = intersectionDistance;
-            } else if (intersectionDistance < closestDistance) {
-                closestDistance = intersectionDistance;
-            }
+            closest.add(centralPort.getDistance(intersection));
         }
 
-        return closestDistance;
+        return closest.getSmallestValue();
     }
 
     private List<Point> getIntersections() {
-        List<Point> intersections = new ArrayList<>();
+        if (intersections == null) {
+            intersections = new ArrayList<>();
 
-        pointToWireIntersection.forEach((k, v) -> {
-            //More than 1 unique wire on same point == intersection
-            if (v.size() > 1) {
-                intersections.add(k);
-            }
-        });
+            pointToWireIntersection.forEach((k, v) -> {
+                //More than 1 unique wire on same point == intersection
+                if (v.size() > 1) {
+                    intersections.add(k);
+                }
+            });
+        }
 
         return intersections;
     }
@@ -66,7 +65,7 @@ public class CrossedWires {
     public int getFewestStepsIntersection() {
         List<Point> intersections = getIntersections();
 
-        SmallestBuffer smallestForGrid = new SmallestBuffer(1);
+        SmallestBuffer smallestForGrid = new SmallestBuffer();
         for(Point intersection: intersections){
             SmallestBuffer smallestForIntersection = new SmallestBuffer(2);
 
