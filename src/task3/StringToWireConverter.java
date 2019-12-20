@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 //TODO: remove DirectionAndDistance POJO, just let the Wire class split the direction and distance.
-public class StringToWireConverter {
+class StringToWireConverter {
 
-    public static List<Wire> getWirePaths(List<String> csvStrings){
+    static List<Wire> getWirePaths(List<String> csvStrings) {
         return csvStrings.stream()
                 .map(StringToWireConverter::getWirePath)
                 .collect(Collectors.toList());

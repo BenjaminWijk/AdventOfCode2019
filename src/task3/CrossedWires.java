@@ -7,23 +7,23 @@ import java.util.*;
 /**
  * Should work with any number of wires greater than 1, not just two
  */
-public class CrossedWires {
+class CrossedWires {
 
-    private List<Wire> wires;
-    private Map<Point, Set<Wire>> pointToWireIntersection = new HashMap<>();
+    private final List<Wire> wires;
+    private final Map<Point, Set<Wire>> pointToWireIntersection = new HashMap<>();
     private List<Point> intersections;
 
-    public CrossedWires(List<Wire> wires) {
+    CrossedWires(List<Wire> wires) {
         this.wires = wires;
     }
 
-    public void populateIntersectionMap() {
+    void populateIntersectionMap() {
         for (Wire wire : wires) {
             addToIntersectionMap(wire);
         }
     }
 
-    public Integer getClosestIntersection() {
+    Integer getClosestIntersection() {
         Point centralPort = Point.get(0, 0);
 
         SmallestBuffer closest = new SmallestBuffer();
@@ -52,7 +52,7 @@ public class CrossedWires {
     private void addToIntersectionMap(Wire wire) {
         for (Point point : wire.getPoints()) {
             if (pointToWireIntersection.get(point) == null) {
-                Set wireSet = new HashSet();
+                Set<Wire> wireSet = new HashSet<>();
                 wireSet.add(wire);
 
                 pointToWireIntersection.put(point, wireSet);

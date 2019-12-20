@@ -5,12 +5,12 @@ import java.util.Map;
 
 public class Point {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     //Points are used to show which wire has visited a coordinate.
     //Using cache to get easy references to the same points.
-    private static Map<String, Point> pointCache = new HashMap<>();
+    private static final Map<String, Point> pointCache = new HashMap<>();
 
     private Point(int x, int y) {
         this.x = x;

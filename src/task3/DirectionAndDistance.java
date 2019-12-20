@@ -1,11 +1,11 @@
 package task3;
 
 //TODO remove
-public class DirectionAndDistance {
-    Direction direction;
-    int distance;
+class DirectionAndDistance {
+    final Direction direction;
+    final int distance;
 
-    public DirectionAndDistance(Direction direction, int distance){
+    DirectionAndDistance(Direction direction, int distance) {
         this.direction = direction;
         this.distance = distance;
     }

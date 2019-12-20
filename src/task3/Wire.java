@@ -3,17 +3,17 @@ package task3;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Wire {
+class Wire {
 
     //TODO replace with the raw strings of direction + distance.
-    private List<DirectionAndDistance> directionAndDistances;
-    private List<Point> points = new ArrayList<>();
+    private final List<DirectionAndDistance> directionAndDistances;
+    private final List<Point> points = new ArrayList<>();
 
-    public Wire(List<DirectionAndDistance> directionAndDistances) {
+    Wire(List<DirectionAndDistance> directionAndDistances) {
         this.directionAndDistances = directionAndDistances;
     }
 
-    public Integer getStepsToPoint(Point point){
+    Integer getStepsToPoint(Point point) {
         if (!points.contains(point)) {
             return null;
         }
@@ -34,7 +34,7 @@ public class Wire {
         throw new RuntimeException("Could not retrieve steps to point.");
     }
 
-    public void calculatePoints() {
+    void calculatePoints() {
         Stepper stepper = new Stepper();
 
         for (DirectionAndDistance dad : directionAndDistances) {
@@ -48,7 +48,7 @@ public class Wire {
         }
     }
 
-    public List<Point> getPoints() {
+    List<Point> getPoints() {
         return points;
     }
 }

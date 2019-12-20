@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 //Incredibly pointless enum in this case, as the shorthand is already quite obvious.
-//Buuut I like my enums so.. here it is. : )
+//But I like my enums so.. here it is. : )
 //TODO: remove this
 public enum Direction {
     UP("U"),
@@ -15,7 +15,7 @@ public enum Direction {
 
     private String shorthand;
 
-    private static Map<String, Direction> intToDirection = new HashMap<>();
+    private static final Map<String, Direction> intToDirection = new HashMap<>();
 
     static {
         Arrays.stream(values()).forEach(direction ->

@@ -1,12 +1,12 @@
 package task3;
 
-public class Stepper {
+class Stepper {
     private int x;
     private int y;
     private int totalSteps;
 
     //TODO just use single char instead of enum
-    public void step(Direction direction){
+    void step(Direction direction) {
         switch (direction) {
             case UP:
                 y += 1;
@@ -25,15 +25,15 @@ public class Stepper {
         totalSteps++;
     }
 
-    public int getX() {
+    int getX() {
         return x;
     }
 
-    public int getY() {
+    int getY() {
         return y;
     }
 
-    public int getTotalSteps() {
+    int getTotalSteps() {
         return totalSteps;
     }
 }
