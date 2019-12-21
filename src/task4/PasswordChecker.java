@@ -15,15 +15,15 @@ class PasswordChecker {
     int countValidPasswords(Task task) {
         this.task = task;
 
-        int validPasswords = 0;
+        int validPasswordCounter = 0;
 
         for (int i = lowerRange; i <= upperRange; i++) {
             if (isValidPassword(i)) {
-                validPasswords++;
+                validPasswordCounter++;
             }
         }
 
-        return validPasswords;
+        return validPasswordCounter;
     }
 
     private boolean isValidPassword(int password) {
