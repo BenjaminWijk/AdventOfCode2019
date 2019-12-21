@@ -5,19 +5,18 @@ class Stepper {
     private int y;
     private int totalSteps;
 
-    //TODO just use single char instead of enum
-    void step(Direction direction) {
+    void step(String direction) {
         switch (direction) {
-            case UP:
+            case "U":
                 y += 1;
                 break;
-            case DOWN:
+            case "D":
                 y -= 1;
                 break;
-            case LEFT:
+            case "L":
                 x -= 1;
                 break;
-            case RIGHT:
+            case "R":
                 x += 1;
                 break;
         }

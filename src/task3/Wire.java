@@ -5,7 +5,6 @@ import java.util.List;
 
 class Wire {
 
-    //TODO replace with the raw strings of direction + distance.
     private final List<DirectionAndDistance> directionAndDistances;
     private final List<Point> points = new ArrayList<>();
 
