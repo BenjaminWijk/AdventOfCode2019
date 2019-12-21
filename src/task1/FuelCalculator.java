@@ -1,5 +1,7 @@
 package task1;
 
+import util.Task;
+
 import java.util.List;
 
 class FuelCalculator {
