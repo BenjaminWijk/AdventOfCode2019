@@ -5,7 +5,9 @@ import util.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-//I guess there's
+import static util.Task.A;
+import static util.Task.B;
+
 class PasswordChecker {
 
     private final int lowerRange = 245318;
@@ -26,65 +28,48 @@ class PasswordChecker {
         return validPasswordCounter;
     }
 
-    private boolean isValidPassword(int password) {
-        return isOnlyIncrementing(password) &&
-                isDuplicateRuleValid(password);
-    }
-
-    private boolean isDuplicateRuleValid(int password) {
-        String strPass = "" + password;
+    //Naming of variables can probably be improved here
+    private boolean isValidPassword(int intPassword) {
+        char[] password = Integer.toString(intPassword).toCharArray();
         List<Integer> adjacentCounters = new ArrayList<>();
 
         int counter = 1;
-        String previous = strPass.substring(0, 1);
 
-        //Increment counter for each occurence in a row of a number.
-        //As soon as the next number doesn't match, add the counter to a list and reset.
-        //After we've checked the entire length, loop through list to check if the task's condition is met.
-        for (int i = 1; i < strPass.length(); i++) {
-            String current = strPass.substring(i, i + 1);
+        for (int i = 1; i < password.length; i++) {
+            char previous = password[i - 1];
+            char current = password[i];
 
-            if (current.equals(previous)) {
+            //"Only increment" rule:
+            if (current < previous) {
+                return false;
+            }
+
+            //"Adjacent duplicates" rule:
+            //Keep track of how many times in a row a number appears.
+            if (current == previous) {
                 counter++;
             } else {
                 adjacentCounters.add(counter);
                 counter = 1;
             }
-
-            //Last value? add to counterList;
-            if (i == strPass.length() - 1) {
-                adjacentCounters.add(counter);
-            }
-
-            previous = current;
         }
 
-        boolean foundValidAdjacent = false;
-        for (Integer integer : adjacentCounters) {
-            switch (task) {
-                case A:
-                    if (integer > 1) foundValidAdjacent = true;
-                    break;
-                case B:
-                    if (integer == 2) foundValidAdjacent = true;
-                    break;
+        //Add last number series to list as well.
+        adjacentCounters.add(counter);
+
+        //"Adjacent duplicates" rule cont.:
+        //After all numbers have been iterated, match against the specific task's condition:
+        //Task A requires at least 2 of the same number to be adjacent
+        //Task B requires exactly 2 of the same number to be adjacent
+        for (Integer numberAdjacentCount : adjacentCounters) {
+            if (task == A && numberAdjacentCount > 1 ||
+                    task == B && numberAdjacentCount == 2) {
+                return true;
             }
         }
-        return foundValidAdjacent;
+
+        return false;
     }
 
-    private boolean isOnlyIncrementing(int password) {
-        String strPass = "" + password;
-        String previous = strPass.substring(0, 1);
 
-        for (int i = 1; i < strPass.length(); i++) {
-            String current = strPass.substring(i, i + 1);
-            if (current.compareTo(previous) < 0)
-                return false;
-
-            previous = current;
-        }
-
-        return true;
-    }
 }
