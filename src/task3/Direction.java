@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This enum exists for a few reasons:
- * 1. Clarifies which directions are possible to receive.
- * 2. Will actively crash if we receive any other value (otherwise Stepper class will just silently ignore issue)
+ * This enum exists for 3 very important reasons:
+ * 1. Code now defines which directions are allowed, instead of just trusting a comment.
+ * 2. Illegal values are handled at conversion stage, no longer the responsibility of other classes.
  * 3. I like enums.
  */
 public enum Direction {
@@ -29,7 +29,12 @@ public enum Direction {
     }
 
     public static Direction of(char singleLetter) {
-        return charToDirection.get(singleLetter);
-    }
+        Direction direction = charToDirection.get(singleLetter);
 
+        if (direction == null) {
+            throw new NullPointerException("Unrecognized letter: " + singleLetter);
+        }
+
+        return direction;
+    }
 }
