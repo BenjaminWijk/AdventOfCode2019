@@ -6,29 +6,36 @@ import java.util.stream.Collectors;
 
 class StringToWireConverter {
 
-    static List<Wire> getWirePaths(List<String> csvStrings) {
+    /**
+     * create all wires
+     *
+     * @param csvStrings csv strings with direction and distance.
+     * @return wire objects, 1 for each string in list.
+     */
+    static List<Wire> buildWirePaths(List<String> csvStrings) {
         return csvStrings.stream()
-                .map(StringToWireConverter::getWirePath)
+                .map(StringToWireConverter::buildWirePath)
                 .collect(Collectors.toList());
     }
 
-    private static Wire getWirePath(String csvString) {
-        List<DirectionAndDistance> ddList =
-                Arrays.stream(csvString.split(","))
-                        .map(StringToWireConverter::stringToDirectionAndDistance)
-                        .collect(Collectors.toList());
 
-        Wire wire = new Wire(ddList);
+    /**
+     * Builds wire object, and all the helping DirectionAndDistance objects.
+     *
+     * @param csvString csv string for a single wire.
+     * @return wire object that has been initialized and has calculated all of its coordinates.
+     */
+    private static Wire buildWirePath(String csvString) {
+        Wire wire = new Wire(
+                Arrays.stream(csvString.split(","))
+                        .map(str -> new DirectionAndDistance(
+                                str.charAt(0),
+                                Integer.valueOf(str.substring(1))))
+                        .collect(Collectors.toList()));
+
         wire.calculatePoints();
 
         return wire;
     }
-
-    private static DirectionAndDistance stringToDirectionAndDistance(String str) {
-        return new DirectionAndDistance(
-                str.substring(0, 1),
-                Integer.valueOf(str.substring(1)));
-    }
-
 
 }

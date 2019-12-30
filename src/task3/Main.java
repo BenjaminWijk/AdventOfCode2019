@@ -13,7 +13,7 @@ public class Main {
     //Task B: 21666
     public static void main(String[] args) {
         List<String> csvStrings = FileUtil.readLinesFromFile(3, "input.txt");
-        List<Wire> wires = StringToWireConverter.getWirePaths(csvStrings);
+        List<Wire> wires = StringToWireConverter.buildWirePaths(csvStrings);
 
         CrossedWires cw = new CrossedWires(wires);
         cw.populateIntersectionMap();
