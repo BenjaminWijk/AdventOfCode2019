@@ -3,6 +3,11 @@ package util;
 //There are probably tons of better ways to implement this,
 //But I was bored and wanted to make my own impl.
 
+/**
+ * A buffer that keeps the smallest values it receives.
+ * Size is customizable.
+ * Note: can contain the same value multiple times.
+ */
 public class SmallestBuffer {
     private final Integer[] buffer;
     private boolean haveNullPositions = true;

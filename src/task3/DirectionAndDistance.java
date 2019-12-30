@@ -2,11 +2,11 @@ package task3;
 
 class DirectionAndDistance {
     //First letter in Up, Down, Left, Right (U,D,L,R)
-    final String direction;
+    final Direction direction;
     final int distance;
 
-    DirectionAndDistance(String direction, int distance) {
-        this.direction = direction;
+    DirectionAndDistance(char direction, int distance) {
+        this.direction = Direction.of(direction);
         this.distance = distance;
     }
 }

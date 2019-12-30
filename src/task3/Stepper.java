@@ -5,18 +5,18 @@ class Stepper {
     private int y;
     private int totalSteps;
 
-    void step(String direction) {
+    void step(Direction direction) {
         switch (direction) {
-            case "U":
+            case UP:
                 y += 1;
                 break;
-            case "D":
+            case DOWN:
                 y -= 1;
                 break;
-            case "L":
+            case LEFT:
                 x -= 1;
                 break;
-            case "R":
+            case RIGHT:
                 x += 1;
                 break;
         }
