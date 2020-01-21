@@ -17,6 +17,10 @@ public class SmallestBuffer {
     }
 
     public SmallestBuffer(int bufferSize) {
+        if(bufferSize < 1){
+            throw new IllegalArgumentException("Buffer size must be greater than 0");
+        }
+
         buffer = new Integer[bufferSize];
     }
 
