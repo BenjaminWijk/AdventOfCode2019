@@ -63,7 +63,7 @@ class CrossedWires {
         List<Point> intersections = getIntersections();
 
         SmallestBuffer smallestForGrid = new SmallestBuffer();
-        for (Point intersection : intersections) {
+        intersections.forEach(intersection -> {
             SmallestBuffer smallestForIntersection = new SmallestBuffer(2);
 
             pointToWireIntersection.get(intersection).forEach(wire ->
@@ -71,7 +71,8 @@ class CrossedWires {
 
             Integer[] values = smallestForIntersection.getValues();
             smallestForGrid.add(values[0] + values[1]);
-        }
+
+        });
 
         return smallestForGrid.getSmallestValue();
     }
