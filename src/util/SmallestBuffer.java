@@ -17,7 +17,7 @@ public class SmallestBuffer {
     }
 
     public SmallestBuffer(int bufferSize) {
-        if(bufferSize < 1){
+        if (bufferSize < 1) {
             throw new IllegalArgumentException("Buffer size must be greater than 0");
         }
 
@@ -26,6 +26,7 @@ public class SmallestBuffer {
 
     public void add(int value) {
 
+        //Still have null values, no need to compare with rest of buffer
         if (haveNullPositions) {
             for (int i = 0; i < buffer.length; i++) {
                 if (buffer[i] == null) {
@@ -35,14 +36,13 @@ public class SmallestBuffer {
             }
         }
 
+        //No more null values, compare and replace largest value in buffer.
         haveNullPositions = false;
 
-        for (int i = 0; i < buffer.length; i++) {
-            LargestValue largest = getLargestValue();
+        LargestValue largest = getLargestValue();
 
-            if (value < largest.value) {
-                buffer[largest.position] = value;
-            }
+        if (value < largest.value) {
+            buffer[largest.position] = value;
         }
     }
 
@@ -80,7 +80,7 @@ public class SmallestBuffer {
         return buffer;
     }
 
-    private class LargestValue {
+    private static class LargestValue {
         final int value;
         final int position;
 
