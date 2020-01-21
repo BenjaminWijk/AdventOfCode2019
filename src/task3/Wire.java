@@ -36,7 +36,7 @@ class Wire {
     void calculatePoints() {
         Stepper stepper = new Stepper();
 
-        for (DirectionAndDistance dad : directionAndDistances) {
+        directionAndDistances.forEach(dad -> {
             for (int i = 0; i < dad.distance; i++) {
                 stepper.step(dad.direction);
 
@@ -44,7 +44,7 @@ class Wire {
                         stepper.getX(),
                         stepper.getY()));
             }
-        }
+        });
     }
 
     List<Point> getPoints() {

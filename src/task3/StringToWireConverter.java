@@ -30,7 +30,7 @@ class StringToWireConverter {
                 Arrays.stream(csvString.split(","))
                         .map(str -> new DirectionAndDistance(
                                 str.charAt(0),
-                                Integer.valueOf(str.substring(1))))
+                                Integer.parseInt(str.substring(1))))
                         .collect(Collectors.toList()));
 
         wire.calculatePoints();

@@ -18,18 +18,15 @@ class CrossedWires {
     }
 
     void populateIntersectionMap() {
-        for (Wire wire : wires) {
-            addToIntersectionMap(wire);
-        }
+        wires.forEach(this::addToIntersectionMap);
     }
 
     Integer getClosestIntersection() {
         Point centralPort = Point.get(0, 0);
 
         SmallestBuffer closest = new SmallestBuffer();
-        for (Point intersection : getIntersections()) {
-            closest.add(centralPort.getDistance(intersection));
-        }
+        getIntersections().forEach(intersection ->
+                closest.add(centralPort.getDistance(intersection)));
 
         return closest.getSmallestValue();
     }
@@ -38,10 +35,10 @@ class CrossedWires {
         if (intersections == null) {
             intersections = new ArrayList<>();
 
-            pointToWireIntersection.forEach((k, v) -> {
+            pointToWireIntersection.forEach((point, wires) -> {
                 //More than 1 unique wire on same point == intersection
-                if (v.size() > 1) {
-                    intersections.add(k);
+                if (wires.size() > 1) {
+                    intersections.add(point);
                 }
             });
         }
@@ -50,7 +47,7 @@ class CrossedWires {
     }
 
     private void addToIntersectionMap(Wire wire) {
-        for (Point point : wire.getPoints()) {
+        wire.getPoints().forEach(point -> {
             if (pointToWireIntersection.get(point) == null) {
                 Set<Wire> wireSet = new HashSet<>();
                 wireSet.add(wire);
@@ -59,19 +56,18 @@ class CrossedWires {
             } else {
                 pointToWireIntersection.get(point).add(wire);
             }
-        }
+        });
     }
 
     int getFewestStepsIntersection() {
         List<Point> intersections = getIntersections();
 
         SmallestBuffer smallestForGrid = new SmallestBuffer();
-        for(Point intersection: intersections){
+        for (Point intersection : intersections) {
             SmallestBuffer smallestForIntersection = new SmallestBuffer(2);
 
-            for(Wire wire: pointToWireIntersection.get(intersection)) {
-                smallestForIntersection.add(wire.getStepsToPoint(intersection));
-            }
+            pointToWireIntersection.get(intersection).forEach(wire ->
+                    smallestForIntersection.add(wire.getStepsToPoint(intersection)));
 
             Integer[] values = smallestForIntersection.getValues();
             smallestForGrid.add(values[0] + values[1]);
