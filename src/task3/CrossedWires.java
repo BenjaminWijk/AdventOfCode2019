@@ -64,13 +64,13 @@ class CrossedWires {
 
         SmallestBuffer smallestForGrid = new SmallestBuffer();
         intersections.forEach(intersection -> {
-            SmallestBuffer smallestForIntersection = new SmallestBuffer(2);
+            List<Integer> smallestForWires = new ArrayList<>();
 
             pointToWireIntersection.get(intersection).forEach(wire ->
-                    smallestForIntersection.add(wire.getStepsToPoint(intersection)));
+                    smallestForWires.add(wire.getStepsToPoint(intersection)));
 
-            Integer[] values = smallestForIntersection.getValues();
-            smallestForGrid.add(values[0] + values[1]);
+            int total = smallestForWires.stream().mapToInt(val -> val).sum();
+            smallestForGrid.add(total);
 
         });
 

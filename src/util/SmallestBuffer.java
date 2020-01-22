@@ -38,7 +38,6 @@ public class SmallestBuffer {
 
         //No more null values, compare and replace largest value in buffer.
         haveNullPositions = false;
-
         LargestValue largest = getLargestValue();
 
         if (value < largest.value) {
