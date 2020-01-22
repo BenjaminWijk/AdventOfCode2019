@@ -9,14 +9,17 @@ import java.util.Map;
 public class Main {
 
     //Task A: 14522484
+    //Task B: 4655956
     public static void main(String[] args) {
-        List<Integer> csvList = FileUtil.readCsvAsIntegers(5, "inputTest.txt");
+        List<Integer> csvList = FileUtil.readCsvAsIntegers(5, "input.txt");
 
         //Task A
-//        new Program(getMemory(csvList)).performInstructions(1);
+        System.out.println("Task A:");
+        new Program(getMemory(csvList), 1, false).performInstructions();
 
         //Task B
-        new Program(getMemory(csvList)).performInstructions(5);
+        System.out.println("\nTask B:");
+        new Program(getMemory(csvList), 5, false).performInstructions();
     }
 
     //Need a fresh map for each attempt

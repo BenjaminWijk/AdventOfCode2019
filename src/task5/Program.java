@@ -2,21 +2,27 @@ package task5;
 
 import java.util.Map;
 
+/**
+ * Ye who enter: beware. This implementation is a bit of a monstrosity.
+ */
 class Program {
 
     private final Map<Integer, Integer> memory;
     private int pointer;
     private int input;
+    private boolean debugPrint;
 
-    Program(Map<Integer, Integer> memory) {
+    Program(Map<Integer, Integer> memory, int input, boolean debugPrint) {
         this.memory = memory;
+        this.input = input;
+        this.debugPrint = debugPrint;
     }
 
-    void performInstructions(int input) {
-        this.input = input;
-
+    void performInstructions() {
         while (true) {
-            MemoryPrintUitl.printMemory(memory, pointer);
+            if (debugPrint) {
+                MemoryPrintUitl.printMemory(memory, pointer);
+            }
 
             Instruction instruction = Instruction.decodeInstruction(get(pointer));
             ValuesAndStoreLocation<Integer> vasl = getFinalValues(instruction);
@@ -35,10 +41,10 @@ class Program {
                     output(instruction);
                     break;
                 case JUMP_IF_TRUE:
-                    jumpIfTrue(vasl);
+                    jumpIfTrue(instruction);
                     break;
                 case JUMP_IF_FALSE:
-                    jumpIfFalse(vasl);
+                    jumpIfFalse(instruction);
                     break;
                 case LESS_THAN:
                     lessThan(vasl);
@@ -59,9 +65,11 @@ class Program {
             total += value;
         }
 
-        System.out.println("Add: storing " + total + " at location " + vasl.storeLocation);
-        write(vasl.storeLocation, total);
+        if (debugPrint) {
+            System.out.println("Add: storing " + total + " at location " + vasl.storeLocation);
+        }
 
+        write(vasl.storeLocation, total);
         incrementPointer(Operation.ADD.stepsToIncrement);
     }
 
@@ -71,49 +79,47 @@ class Program {
             total *= vasl.get(i);
         }
 
-        System.out.println("Multiply: storing " + total + " at location " + vasl.storeLocation);
-        write(vasl.storeLocation, total);
+        if (debugPrint) {
+            System.out.println("Multiply: storing " + total + " at location " + vasl.storeLocation);
+        }
 
+        write(vasl.storeLocation, total);
         incrementPointer(Operation.MULTIPLY.stepsToIncrement);
     }
 
     private void save() {
         int memLoc = get(pointer + 1);
-        System.out.println("Writing " + input + " to location " + memLoc);
-        write(memLoc, input);
 
+        if (debugPrint) {
+            System.out.println("Writing " + input + " to location " + memLoc);
+        }
+
+        write(memLoc, input);
         incrementPointer(Operation.SAVE.stepsToIncrement);
     }
 
     private void output(Instruction instruction) {
-        int value = getWithMode(instruction.modes.get(0), pointer + 1);
+        int value = getWithMode(instruction.modes.first(), pointer + 1);
 
+        //Not a debug print
         System.out.println("Outputting " + value);
 
         incrementPointer(Operation.OUTPUT.stepsToIncrement);
     }
 
-    private int getWithMode(Mode mode, int address) {
-        switch (mode) {
-            case POSITION:
-                return get(address);
-            case IMMEDIATE:
-                return address;
-        }
-        throw new IllegalArgumentException();
-    }
-
-    private void jumpIfTrue(ValuesAndStoreLocation<Integer> vasl) {
-        if (vasl.first() != 0) {
-            pointer = vasl.storeLocation;
+    private void jumpIfTrue(Instruction instruction) {
+        int value = getWithMode(instruction.modes.first(), pointer + 1);
+        if (value != 0) {
+            pointer = getWithMode(instruction.modes.last(), pointer + 2);
         } else {
             incrementPointer(Operation.JUMP_IF_TRUE.stepsToIncrement);
         }
     }
 
-    private void jumpIfFalse(ValuesAndStoreLocation<Integer> vasl) {
-        if (vasl.first() == 0) {
-            pointer = vasl.storeLocation;
+    private void jumpIfFalse(Instruction instruction) {
+        int value = getWithMode(instruction.modes.first(), pointer + 1);
+        if (value == 0) {
+            pointer = getWithMode(instruction.modes.last(), pointer + 2);
         } else {
             incrementPointer(Operation.JUMP_IF_TRUE.stepsToIncrement);
         }
@@ -126,6 +132,8 @@ class Program {
             value = 1;
         }
         write(vasl.storeLocation, value);
+
+        incrementPointer(Operation.LESS_THAN.stepsToIncrement);
     }
 
     private void performEquals(ValuesAndStoreLocation<Integer> vasl) {
@@ -134,6 +142,8 @@ class Program {
             value = 1;
         }
         write(vasl.storeLocation, value);
+
+        incrementPointer(Operation.EQUALS.stepsToIncrement);
     }
 
     private void write(Integer address, Integer value) {
@@ -152,6 +162,16 @@ class Program {
 
     private void incrementPointer(int steps) {
         pointer += steps;
+    }
+
+    private int getWithMode(Mode mode, int address) {
+        switch (mode) {
+            case POSITION:
+                return read(address);
+            case IMMEDIATE:
+                return get(address);
+        }
+        throw new IllegalArgumentException();
     }
 
     private ValuesAndStoreLocation<Integer> getFinalValues(Instruction instruction) {
