@@ -7,20 +7,20 @@ class Orbitable {
     //-1 represents "not yet calculated"
     var noOfOrbits: Int = -1
 
-    fun calcNumberOfOrbits(): Int{
-        if(noOfOrbits >= 0){
+    fun calcNumberOfOrbits(): Int {
+        if (alreadyCalculated()) {
             return noOfOrbits
         }
 
-        //Is this object the COM?
-        if (parent == null){
-            noOfOrbits = 0
-            return noOfOrbits
-        }
-
-        noOfOrbits = parent!!.calcNumberOfOrbits() + 1
+        noOfOrbits = if (isCenterOfMass())
+            0
+        else
+            parent!!.calcNumberOfOrbits() + 1
+        
         return noOfOrbits
     }
 
+    private fun isCenterOfMass(): Boolean = parent == null
+    private fun alreadyCalculated(): Boolean = noOfOrbits >= 0
 
 }
