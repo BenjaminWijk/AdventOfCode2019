@@ -12,7 +12,7 @@ fun main(){
     oc.calculateNoOfOrbits()
 
     //Task A
-    println(oc.totalNoOfOrbits)
+    println(oc.totalNumberOfOrbits)
 
     //Task B
     println(oc.getDistanceToSanta())

@@ -5,18 +5,18 @@ import java.lang.RuntimeException
 class OrbitCalculator(val orbitStrings: List<String>) {
 
     private val orbitables: HashMap<String, Orbitable> = HashMap()
-    var totalNoOfOrbits = 0
+    var totalNumberOfOrbits = 0
 
     fun connectOrbitables() {
         orbitStrings.forEach { orbString ->
-            val sArr = orbString.split(")")
-            createAndConnectOrbitables(sArr[0], sArr[1])
+            val parentAndChildArray = orbString.split(")")
+            createAndConnectOrbitables(parentAndChildArray[0], parentAndChildArray[1])
         }
     }
 
     fun calculateNoOfOrbits() {
         orbitables.values.forEach { orbitable ->
-            totalNoOfOrbits += orbitable.calcNumberOfOrbits()
+            totalNumberOfOrbits += orbitable.calcNumberOfOrbits()
         }
     }
 
@@ -25,10 +25,10 @@ class OrbitCalculator(val orbitStrings: List<String>) {
         val santa = orbitables["SAN"]!!
         val closestParent = findClosestCommonParent(you, santa)
 
-        val youDistToClosest = you.parent!!.noOfOrbits - closestParent.noOfOrbits
-        val santaDistToClosest = santa.parent!!.noOfOrbits - closestParent.noOfOrbits
+        val youDistanceToClosest = you.parent!!.numberOfOrbits - closestParent.numberOfOrbits
+        val santaDistanceToClosest = santa.parent!!.numberOfOrbits - closestParent.numberOfOrbits
 
-        return youDistToClosest + santaDistToClosest
+        return youDistanceToClosest + santaDistanceToClosest
     }
 
     private fun createAndConnectOrbitables(parent: String, child: String) {
