@@ -11,6 +11,7 @@ public class Main {
         List<int[]> permutations = getPermutationArrays(FileUtil.readLinesFromFile(7, "permutations.txt"));
 
         AmplifierController controller = new AmplifierController(getMemory(memory), permutations);
+        System.out.println(controller.findHighestSignal());
     }
 
     private static List<int[]> getPermutationArrays(List<String> permutationStrings) {

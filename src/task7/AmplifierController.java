@@ -1,9 +1,8 @@
 package task7;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import task7.intcomputer.Program;
+
+import java.util.*;
 
 public class AmplifierController {
 
@@ -18,22 +17,35 @@ public class AmplifierController {
 
     int findHighestSignal() {
         int highest = 0;
+        String highestPerm = "";
 
         for (int[] permutation : permutations) {
             int output = getOutput(permutation);
 
             if (output > highest) {
                 highest = output;
+                highestPerm = permutationToString(permutation);
             }
         }
-
+        System.out.println("PERMUTATION: " + highestPerm);
         return highest;
     }
 
     private int getOutput(int[] permutation) {
         List<Amplifier> amplifiers = createAmplifiers(permutation);
+        int nextInput = 0;
 
-        return -1;
+        for(Amplifier amp: amplifiers){
+            nextInput = amp.calculateOutput(nextInput);
+        }
+        return nextInput;
+    }
+
+    private String permutationToString(int[] perm){
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(perm).forEach(sb::append);
+
+        return sb.toString();
     }
 
     private Map<Integer, Integer> getMemoryCopy() {
@@ -43,10 +55,7 @@ public class AmplifierController {
     private List<Amplifier> createAmplifiers(int[] permutation) {
         List<Amplifier> amplifiers = new ArrayList<>();
 
-        //First always has 0 as input
-        amplifiers.add(new Amplifier(permutation[0], 0));
-
-        for (int i = 1; i < permutation.length; i++) {
+        for (int i: permutation) {
             amplifiers.add(new Amplifier(i));
         }
 
@@ -56,7 +65,6 @@ public class AmplifierController {
     private class Amplifier {
         Map<Integer, Integer> memory;
         int setting;
-        int input = -1;
         int output;
 
         public Amplifier(int setting) {
@@ -64,10 +72,9 @@ public class AmplifierController {
             this.memory = getMemoryCopy();
         }
 
-        public Amplifier(int setting, int input) {
-            this.setting = setting;
-            this.input = input;
-            this.memory = getMemoryCopy();
+        public int calculateOutput(int input) {
+            return new Program(memory, input, setting, false)
+                    .performInstructions();
         }
     }
 }
