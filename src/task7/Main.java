@@ -1,17 +1,30 @@
 package task7;
 
 import util.FileUtil;
+import util.Task;
 
 import java.util.*;
 
 public class Main {
 
+    //Task A: 24625
     public static void main(String[] args) {
-        List<Integer> memory = FileUtil.readCsvAsIntegers(7, "inputTest.txt");
-        List<int[]> permutations = getPermutationArrays(FileUtil.readLinesFromFile(7, "permutations.txt"));
+        List<Integer> memory = FileUtil.readCsvAsIntegers(7, "inputTestB.txt");
+        List<int[]> permutationsA = getPermutationArrays(FileUtil.readLinesFromFile(7, "permutationsA.txt"));
+        List<int[]> permutationsB = getPermutationArrays(FileUtil.readLinesFromFile(7, "permutationsB.txt"));
 
-        AmplifierController controller = new AmplifierController(getMemory(memory), permutations);
-        System.out.println(controller.findHighestSignal());
+        //Task A
+//        AmplifierController controllerA = new AmplifierController(getMemory(memory), permutationsA, Task.A);
+//        System.out.println("Task A: ");
+//        System.out.println(controllerA.findHighestSignal());
+//        System.out.println();
+
+        //Task B
+        //TODO new permutations
+        AmplifierController controllerB = new AmplifierController(getMemory(memory), permutationsB, Task.B);
+        System.out.println("Task B");
+        System.out.println(controllerB.findHighestSignal());
+
     }
 
     private static List<int[]> getPermutationArrays(List<String> permutationStrings) {

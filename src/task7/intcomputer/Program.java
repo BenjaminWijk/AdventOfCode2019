@@ -12,10 +12,11 @@ public class Program {
     private final Map<Integer, Integer> memory;
     private int pointer;
 
-    private boolean hasWrittenInput = false;
+    private boolean hasWrittenSetting = false;
     private int input;
     private int setting;
     public int output = -1;
+    public boolean finished = false;
 
     private boolean debugPrint;
 
@@ -46,8 +47,7 @@ public class Program {
                     save();
                     break;
                 case OUTPUT:
-                    output(instruction);
-                    break;
+                    return output(instruction);
                 case JUMP_IF_TRUE:
                     jumpIfTrue(instruction);
                     break;
@@ -61,6 +61,7 @@ public class Program {
                     performEquals(vasl);
                     break;
                 case FINISHED:
+                    finished = true;
                     return output;
             }
         }
@@ -99,8 +100,8 @@ public class Program {
         int memLoc = get(pointer + 1);
 
         //Task7
-        int value = hasWrittenInput ? setting: input;
-        hasWrittenInput = true;
+        int value = hasWrittenSetting ? input: setting;
+        hasWrittenSetting = true;
 
         if (debugPrint) {
             System.out.println("Writing " + value + " to location " + memLoc);
@@ -110,15 +111,13 @@ public class Program {
         incrementPointer(Operation.SAVE.stepsToIncrement);
     }
 
-    private void output(Instruction instruction) {
+    private int output(Instruction instruction) {
         int value = getWithMode(instruction.modes.first(), pointer + 1);
 
         //Not a debug print
         System.out.println("Outputting " + value);
-        //Task7
-        output = value;
 
-        incrementPointer(Operation.OUTPUT.stepsToIncrement);
+        return value;
     }
 
     private void jumpIfTrue(Instruction instruction) {

@@ -15,11 +15,11 @@ public class Main {
 
         //Task A
         System.out.println("Task A:");
-        new Program(getMemory(csvList), 1, 1, false).performInstructions();
+        new Program(getMemory(csvList), 1, false).performInstructions();
 
         //Task B
         System.out.println("\nTask B:");
-        new Program(getMemory(csvList), 5,1, false).performInstructions();
+        new Program(getMemory(csvList), 5, false).performInstructions();
     }
 
     //Need a fresh map for each attempt
