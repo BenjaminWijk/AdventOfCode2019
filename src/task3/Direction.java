@@ -9,6 +9,7 @@ import java.util.function.Consumer;
  * This enum exists for 3 very important reasons:
  * 1. Code now defines which directions are allowed, instead of just trusting a comment.
  * 2. Illegal values are handled at conversion stage, no longer the responsibility of other classes.
+ * 4. Handles stepper logic for each value, making it clearer what the difference is.
  * 3. I like enums.
  */
 public enum Direction {
