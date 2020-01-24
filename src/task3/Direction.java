@@ -3,6 +3,7 @@ package task3;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -16,12 +17,13 @@ public enum Direction {
     UP('U', stepper -> stepper.y++),
     DOWN('D', stepper -> stepper.y--),
     LEFT('L', stepper -> stepper.x--),
-    RIGHT( 'R', stepper -> stepper.x++);
+    RIGHT('R', stepper -> stepper.x++);
 
     private char singleLetter;
     private final Consumer<Stepper> stepInstruction;
 
     private static Map<Character, Direction> charToDirection = new HashMap<>();
+
     static {
         Arrays.stream(Direction.values()).forEach(direction ->
                 charToDirection.put(direction.singleLetter, direction));
@@ -37,12 +39,7 @@ public enum Direction {
     }
 
     public static Direction of(char singleLetter) {
-        Direction direction = charToDirection.get(singleLetter);
-
-        if (direction == null) {
-            throw new NullPointerException("Unrecognized letter: " + singleLetter);
-        }
-
-        return direction;
+        return Optional.of(charToDirection.get(singleLetter))
+                .orElseThrow(() -> new NullPointerException("Unrecognized letter: " + singleLetter));
     }
 }

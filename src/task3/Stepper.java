@@ -7,7 +7,6 @@ class Stepper {
 
     void step(Direction direction) {
         direction.getStepInstruction().accept(this);
-
         totalSteps++;
     }
 
