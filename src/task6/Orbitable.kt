@@ -6,6 +6,8 @@ class Orbitable {
 
     var numberOfOrbits: Int = -1
 
+
+    //Total direct and indirect orbits are the same as the number of "connected jumps" to center of mass.
     fun calcNumberOfOrbits(): Int {
         if (alreadyCalculated()) {
             return numberOfOrbits
@@ -21,5 +23,4 @@ class Orbitable {
 
     private fun isCenterOfMass(): Boolean = parent == null
     private fun alreadyCalculated(): Boolean = numberOfOrbits >= 0
-
 }

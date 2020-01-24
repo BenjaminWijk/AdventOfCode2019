@@ -1,9 +1,9 @@
-package task5;
+package util.intcomputer;
 
 import java.util.Map;
 import java.util.StringJoiner;
 
-public class MemoryPrintUitl {
+public class MemoryPrinter {
 
     Map<Integer, Integer> memory;
     int pointer;
@@ -12,13 +12,13 @@ public class MemoryPrintUitl {
     private String memoryString;
     private String pointerString;
 
-    private MemoryPrintUitl(Map<Integer, Integer> memory, int pointer) {
+    private MemoryPrinter(Map<Integer, Integer> memory, int pointer) {
         this.memory = memory;
         this.pointer = pointer;
     }
 
     public static void printMemory(Map<Integer, Integer> memory, int pointer) {
-        MemoryPrintUitl printer = new MemoryPrintUitl(memory, pointer);
+        MemoryPrinter printer = new MemoryPrinter(memory, pointer);
 
         printer.createMemoryString();
         printer.createPointerString();
@@ -31,16 +31,20 @@ public class MemoryPrintUitl {
         int counter = 0;
         for (Integer value : memory.values()) {
             if (counter == pointer) {
-                pointerPointer = sj.toString().length();
-                if(counter != 0){
-                    pointerPointer += 2;
-                }
+                updatePointerPointer(sj, counter);
             }
             counter++;
 
             sj.add(value.toString());
         }
         memoryString = sj.toString();
+    }
+
+    private void updatePointerPointer(StringJoiner sj, int counter) {
+        pointerPointer = sj.toString().length();
+        if(counter != 0){
+            pointerPointer += 2;
+        }
     }
 
     private void createPointerString() {

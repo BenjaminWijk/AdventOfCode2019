@@ -9,8 +9,12 @@ class OrbitCalculator(val orbitStrings: List<String>) {
 
     fun connectOrbitables() {
         orbitStrings.forEach { orbString ->
-            val parentAndChildArray = orbString.split(")")
-            createAndConnectOrbitables(parentAndChildArray[0], parentAndChildArray[1])
+            val parentAndChild = orbString.split(")")
+
+            val parentOrb = orbitables.computeIfAbsent(parentAndChild[0]) { Orbitable() }
+            val childOrb = orbitables.computeIfAbsent(parentAndChild[1]) { Orbitable() }
+
+            childOrb.parent = parentOrb
         }
     }
 
@@ -20,7 +24,7 @@ class OrbitCalculator(val orbitStrings: List<String>) {
         }
     }
 
-    fun getDistanceToSanta(): Int {
+    fun getDistanceBetweenYouAndSanta(): Int {
         val you = orbitables["YOU"]!!
         val santa = orbitables["SAN"]!!
         val closestParent = findClosestCommonParent(you, santa)
@@ -29,13 +33,6 @@ class OrbitCalculator(val orbitStrings: List<String>) {
         val santaDistanceToClosest = santa.parent!!.numberOfOrbits - closestParent.numberOfOrbits
 
         return youDistanceToClosest + santaDistanceToClosest
-    }
-
-    private fun createAndConnectOrbitables(parent: String, child: String) {
-        val childOrb = orbitables.computeIfAbsent(child) { Orbitable() }
-        val parentOrb = orbitables.computeIfAbsent(parent) { Orbitable() }
-
-        childOrb.parent = parentOrb
     }
 
     private fun findClosestCommonParent(first: Orbitable, second: Orbitable): Orbitable {

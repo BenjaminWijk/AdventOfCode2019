@@ -7,13 +7,13 @@ import util.FileUtil
 fun main(){
     val orbits = FileUtil.readLinesFromFile(6, "input.txt")
 
-    val oc = OrbitCalculator(orbits)
-    oc.connectOrbitables()
-    oc.calculateNoOfOrbits()
+    val orbitCalculator = OrbitCalculator(orbits)
+    orbitCalculator.connectOrbitables()
+    orbitCalculator.calculateNoOfOrbits()
 
     //Task A
-    println(oc.totalNumberOfOrbits)
+    println(orbitCalculator.totalNumberOfOrbits)
 
     //Task B
-    println(oc.getDistanceToSanta())
+    println(orbitCalculator.getDistanceBetweenYouAndSanta())
 }
