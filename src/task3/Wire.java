@@ -23,7 +23,7 @@ class Wire {
             for (int i = 0; i < dad.distance; i++) {
                 stepper.step(dad.direction);
 
-                Point currentPoint = Point.get(stepper.getX(), stepper.getY());
+                Point currentPoint = Point.get(stepper.x, stepper.y);
                 if (currentPoint == point) {
                     return stepper.getTotalSteps();
                 }
@@ -41,8 +41,8 @@ class Wire {
                 stepper.step(dad.direction);
 
                 points.add(Point.get(
-                        stepper.getX(),
-                        stepper.getY()));
+                        stepper.x,
+                        stepper.y));
             }
         });
     }

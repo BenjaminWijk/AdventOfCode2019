@@ -1,8 +1,8 @@
 package task3;
 
 class Stepper {
-    private int x;
-    private int y;
+    public int x;
+    public int y;
     private int totalSteps;
 
     void step(Direction direction) {
@@ -22,14 +22,6 @@ class Stepper {
         }
 
         totalSteps++;
-    }
-
-    int getX() {
-        return x;
-    }
-
-    int getY() {
-        return y;
     }
 
     int getTotalSteps() {
