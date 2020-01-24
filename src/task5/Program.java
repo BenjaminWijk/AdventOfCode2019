@@ -1,5 +1,7 @@
 package task5;
 
+import util.intcomputer.MemoryPrinter;
+
 import java.util.Map;
 
 /**
@@ -9,19 +11,24 @@ class Program {
 
     private final Map<Integer, Integer> memory;
     private int pointer;
+
+    private boolean hasWrittenInput = false;
     private int input;
+    private int setting;
+
     private boolean debugPrint;
 
-    Program(Map<Integer, Integer> memory, int input, boolean debugPrint) {
+    Program(Map<Integer, Integer> memory, int input, int setting, boolean debugPrint) {
         this.memory = memory;
         this.input = input;
+        this.setting = setting;
         this.debugPrint = debugPrint;
     }
 
     void performInstructions() {
         while (true) {
             if (debugPrint) {
-                MemoryPrintUitl.printMemory(memory, pointer);
+                MemoryPrinter.printMemory(memory, pointer);
             }
 
             Instruction instruction = Instruction.decodeInstruction(get(pointer));
@@ -90,11 +97,15 @@ class Program {
     private void save() {
         int memLoc = get(pointer + 1);
 
+        //Task7
+        int value = hasWrittenInput ? setting: input;
+        hasWrittenInput = true;
+
         if (debugPrint) {
-            System.out.println("Writing " + input + " to location " + memLoc);
+            System.out.println("Writing " + value + " to location " + memLoc);
         }
 
-        write(memLoc, input);
+        write(memLoc, value);
         incrementPointer(Operation.SAVE.stepsToIncrement);
     }
 
