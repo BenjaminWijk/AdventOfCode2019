@@ -62,8 +62,11 @@ public class AmplifierController {
         Amplifier amp;
         do {
             amp = amplifiers.getNext();
-            System.out.println("Loop: " + amplifiers.loopCounter);
-            System.out.println("Amplifier: " + amplifiers.getIndex());
+
+            if(amp.debugPrint) {
+                System.out.println("Loop: " + amplifiers.loopCounter);
+                System.out.println("Amplifier: " + amplifiers.getIndex());
+            }
 
             nextInput = amp.calculateOutput(nextInput);
 
@@ -87,9 +90,8 @@ public class AmplifierController {
     private CyclicList<Amplifier> createAmplifiers(int[] permutation) {
         CyclicList<Amplifier> amplifiers = new CyclicList<>();
 
-        for (int i : permutation) {
-            amplifiers.add(new Amplifier(i));
-        }
+        Arrays.stream(permutation).forEach(i ->
+                amplifiers.add(new Amplifier(i)));
 
         return amplifiers;
     }
@@ -98,6 +100,7 @@ public class AmplifierController {
         Map<Integer, Integer> memory;
         int setting;
         Program program;
+        boolean debugPrint = false;
 
         public Amplifier(int setting) {
             this.setting = setting;
@@ -106,7 +109,7 @@ public class AmplifierController {
 
         public int calculateOutput(int input) {
             if(program == null) {
-                program = new Program(memory, input, setting, true);
+                program = new Program(memory, input, setting, debugPrint);
             } else {
                 program.input = input;
             }

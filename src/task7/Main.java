@@ -15,15 +15,15 @@ public class Main {
         List<int[]> permutationsB = getPermutationArrays(FileUtil.readLinesFromFile(7, "permutationsB.txt"));
 
         //Task A
-//        AmplifierController controllerA = new AmplifierController(getMemory(memory), permutationsA, Task.A);
-//        System.out.println();
-//        System.out.println(controllerA.findHighestSignal());
-//        System.out.println();
+        AmplifierController controllerA = new AmplifierController(getMemory(memory), permutationsA, Task.A);
+        System.out.println("Task A");
+        System.out.println("Thruster signal: " + controllerA.findHighestSignal());
+        System.out.println();
 
         //Task B
         AmplifierController controllerB = new AmplifierController(getMemory(memory), permutationsB, Task.B);
         System.out.println("Task B");
-        System.out.println(controllerB.findHighestSignal());
+        System.out.println("Thruster signal: " + controllerB.findHighestSignal());
 
     }
 

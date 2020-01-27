@@ -108,8 +108,8 @@ public class Program {
     private int output(Instruction instruction) {
         int value = getWithMode(instruction.modes.first(), pointer + 1);
 
-        //Not a debug print
-        System.out.println("Outputting " + value);
+        log("Outputting " + value);
+
         output = value;
         incrementPointer(Operation.OUTPUT.stepsToIncrement);
         return value;
