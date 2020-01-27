@@ -2,10 +2,10 @@ package task8
 
 import kotlin.streams.toList
 
-class SIFDecoder(val width: Int, val height: Int, val imageData: String) {
-    val numberOfPixels = width * height
+class SIFDecoder(private val width: Int, private val height: Int, private val imageData: String) {
+    private val numberOfPixels = width * height
 
-    lateinit var layers: List<Layer>
+    private lateinit var layers: List<Layer>
 
     fun createLayers() {
         val layerData: ArrayList<String> = separateDataByLayer()
@@ -43,10 +43,10 @@ class SIFDecoder(val width: Int, val height: Int, val imageData: String) {
 
     private fun renderPixel(row: Int, col: Int) {
         var layerDepth = 0
-        var color: PixelColor = PixelColor.TRANSPARENT
+        var color: PixelColor
 
         do {
-            var layer = layers[layerDepth++]
+            val layer = layers[layerDepth++]
             color = layer.getPixelColor(row, col)
 
         } while (color == PixelColor.TRANSPARENT)
@@ -65,6 +65,4 @@ class SIFDecoder(val width: Int, val height: Int, val imageData: String) {
 
         return layerData
     }
-
-
 }

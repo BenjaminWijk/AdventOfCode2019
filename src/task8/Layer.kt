@@ -1,6 +1,6 @@
 package task8
 
-class Layer(val width: Int, val layerData: String){
+class Layer(private val width: Int, private val layerData: String){
 
     val digitCount: HashMap<Int, Int> = HashMap()
 
