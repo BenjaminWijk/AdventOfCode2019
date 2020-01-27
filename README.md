@@ -6,4 +6,4 @@ Readability is more important than optimization for me: there are most likely wa
 ...And most likely way more readable as well. : )
 
 Highly recommend not looking at the follow-up intcode computer tasks (5,7). 
-The tasks are a lot lower level than I prefer, so I haven't really cleaned them up all that much.
+The tasks were a lot lower level than I prefer (you're practically making a simple CPU), so I haven't really cleaned them up all that much.
