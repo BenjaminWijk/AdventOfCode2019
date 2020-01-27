@@ -8,19 +8,19 @@ import java.util.*;
 public class Main {
 
     //Task A: 24625
+    //Task B: 36497698
     public static void main(String[] args) {
-        List<Integer> memory = FileUtil.readCsvAsIntegers(7, "inputTestB.txt");
+        List<Integer> memory = FileUtil.readCsvAsIntegers(7, "input.txt");
         List<int[]> permutationsA = getPermutationArrays(FileUtil.readLinesFromFile(7, "permutationsA.txt"));
         List<int[]> permutationsB = getPermutationArrays(FileUtil.readLinesFromFile(7, "permutationsB.txt"));
 
         //Task A
 //        AmplifierController controllerA = new AmplifierController(getMemory(memory), permutationsA, Task.A);
-//        System.out.println("Task A: ");
+//        System.out.println();
 //        System.out.println(controllerA.findHighestSignal());
 //        System.out.println();
 
         //Task B
-        //TODO new permutations
         AmplifierController controllerB = new AmplifierController(getMemory(memory), permutationsB, Task.B);
         System.out.println("Task B");
         System.out.println(controllerB.findHighestSignal());

@@ -59,13 +59,15 @@ public class AmplifierController {
         CyclicList<Amplifier> amplifiers = createAmplifiers(permutation);
         int nextInput = 0;
 
-        while(true){
-            Amplifier amp = amplifiers.getNext();
-            amp.calculateOutput(nextInput);
-            if(amp.finished()){
-                break;
-            }
-        }
+        Amplifier amp;
+        do {
+            amp = amplifiers.getNext();
+            System.out.println("Loop: " + amplifiers.loopCounter);
+            System.out.println("Amplifier: " + amplifiers.getIndex());
+
+            nextInput = amp.calculateOutput(nextInput);
+
+        } while (!amplifiers.getLast().finished());
 
         return nextInput;
     }
@@ -103,11 +105,16 @@ public class AmplifierController {
         }
 
         public int calculateOutput(int input) {
-            program = new Program(memory, input, setting, false);
+            if(program == null) {
+                program = new Program(memory, input, setting, true);
+            } else {
+                program.input = input;
+            }
+
             return program.performInstructions();
         }
 
-        public boolean finished(){
+        public boolean finished() {
             return program != null && program.finished;
         }
     }

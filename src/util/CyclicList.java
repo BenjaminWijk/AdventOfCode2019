@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class CyclicList<T> extends ArrayList<T>{
 
     private int index;
+    public int loopCounter;
 
     public T getNext(){
         if(index == size()){
@@ -18,7 +19,12 @@ public class CyclicList<T> extends ArrayList<T>{
         return index;
     }
 
+    public T getLast(){
+        return get(size()-1);
+    }
+
     public void reset(){
         index = 0;
+        loopCounter++;
     }
 }

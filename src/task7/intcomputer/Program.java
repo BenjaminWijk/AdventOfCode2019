@@ -13,7 +13,7 @@ public class Program {
     private int pointer;
 
     private boolean hasWrittenSetting = false;
-    private int input;
+    public int input;
     private int setting;
     public int output = -1;
     public boolean finished = false;
@@ -74,9 +74,7 @@ public class Program {
             total += value;
         }
 
-        if (debugPrint) {
-            System.out.println("Add: storing " + total + " at location " + vasl.storeLocation);
-        }
+        log("Add: storing " + total + " at location " + vasl.storeLocation);
 
         write(vasl.storeLocation, total);
         incrementPointer(Operation.ADD.stepsToIncrement);
@@ -88,9 +86,7 @@ public class Program {
             total *= vasl.get(i);
         }
 
-        if (debugPrint) {
-            System.out.println("Multiply: storing " + total + " at location " + vasl.storeLocation);
-        }
+        log("Multiply: storing " + total + " at location " + vasl.storeLocation);
 
         write(vasl.storeLocation, total);
         incrementPointer(Operation.MULTIPLY.stepsToIncrement);
@@ -100,12 +96,10 @@ public class Program {
         int memLoc = get(pointer + 1);
 
         //Task7
-        int value = hasWrittenSetting ? input: setting;
+        int value = hasWrittenSetting ? input : setting;
         hasWrittenSetting = true;
 
-        if (debugPrint) {
-            System.out.println("Writing " + value + " to location " + memLoc);
-        }
+        log("Writing " + value + " to location " + memLoc);
 
         write(memLoc, value);
         incrementPointer(Operation.SAVE.stepsToIncrement);
@@ -116,7 +110,8 @@ public class Program {
 
         //Not a debug print
         System.out.println("Outputting " + value);
-
+        output = value;
+        incrementPointer(Operation.OUTPUT.stepsToIncrement);
         return value;
     }
 
@@ -124,16 +119,21 @@ public class Program {
         int value = getWithMode(instruction.modes.first(), pointer + 1);
         if (value != 0) {
             pointer = getWithMode(instruction.modes.last(), pointer + 2);
+            log("Jump if true: Jumping to " + pointer);
         } else {
+            log("Jump if true: False, skip jump");
             incrementPointer(Operation.JUMP_IF_TRUE.stepsToIncrement);
         }
     }
+
 
     private void jumpIfFalse(Instruction instruction) {
         int value = getWithMode(instruction.modes.first(), pointer + 1);
         if (value == 0) {
             pointer = getWithMode(instruction.modes.last(), pointer + 2);
+            log("Jump if false: Jumping to " + pointer);
         } else {
+            log("Jump if false: True, skip jump");
             incrementPointer(Operation.JUMP_IF_TRUE.stepsToIncrement);
         }
     }
@@ -143,6 +143,9 @@ public class Program {
 
         if (vasl.first() < vasl.last()) {
             value = 1;
+            log("Less than: Value is less than, storing 1 at " + vasl.storeLocation);
+        } else {
+            log("Less than: Value is not less than, storing 0 at " + vasl.storeLocation);
         }
         write(vasl.storeLocation, value);
 
@@ -153,10 +156,19 @@ public class Program {
         int value = 0;
         if (vasl.first().equals(vasl.last())) {
             value = 1;
+            log("Equals: Value is equal, storing 1 at " + vasl.storeLocation);
+        } else {
+            log("Equals: Value is not equal, storing 0 at " + vasl.storeLocation);
         }
         write(vasl.storeLocation, value);
 
         incrementPointer(Operation.EQUALS.stepsToIncrement);
+    }
+
+    private void log(String toLog) {
+        if (debugPrint) {
+            System.out.println(toLog);
+        }
     }
 
     private void write(Integer address, Integer value) {
@@ -191,7 +203,6 @@ public class Program {
         ValuesAndStoreLocation<Integer> vasl = new ValuesAndStoreLocation<>();
 
         //Last value is used for storage etc. Handling varies from opcode to opcode
-        //TODO lookup if this is the case at end of Task B
         vasl.setStoreLocation(get(pointer + instruction.modes.size()));
 
         for (int i = 0; i < instruction.modes.size() - 1; i++) {

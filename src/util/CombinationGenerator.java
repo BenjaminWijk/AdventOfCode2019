@@ -32,9 +32,8 @@ public class CombinationGenerator {
         }
     }
 
-
-    public static void main(String args[]) {
-        int[] sequence = new int[]{0,1,2,3,4};
+    public static void main(String[] args) {
+        int[] sequence = new int[]{5,6,7,8,9};
 
         permute(sequence, 0);
     }
