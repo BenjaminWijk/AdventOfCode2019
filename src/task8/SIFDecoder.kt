@@ -14,7 +14,6 @@ class SIFDecoder(private val width: Int, private val height: Int, private val im
         }.toList()
     }
 
-
     fun getMultipliedDigitsValue(): Int {
         var fewestZeroes: Layer? = null
         layers.forEach { layer ->
@@ -38,7 +37,6 @@ class SIFDecoder(private val width: Int, private val height: Int, private val im
             }
             print("\n")
         }
-
     }
 
     private fun renderPixel(row: Int, col: Int) {
